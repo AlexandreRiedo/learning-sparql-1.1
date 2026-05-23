@@ -1,0 +1,11 @@
+# filename: ex025.rq
+# See update in ex025a.rq.
+
+PREFIX d: <http://dbpedia.org/ontology/>
+
+SELECT ?artist ?album 
+WHERE
+{
+  ?album d:producer :Timbaland .
+  ?album d:musicalArtist ?artist . 
+}

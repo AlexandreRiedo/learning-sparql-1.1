@@ -1,0 +1,9 @@
+# filename: ex269.rq
+# see update in ex269a.rq.
+
+ SELECT * WHERE {
+  :Ducati <http://dbpedia.org/ontology/locationCity> ?city .
+  ?city rdfs:label ?cityName . 
+  FILTER ( lang(?cityName) = "en" )
+}
+
