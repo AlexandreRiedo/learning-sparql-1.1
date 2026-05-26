@@ -2,6 +2,6 @@
 
 PREFIX e: <http://learningsparql.com/ns/expenses#> 
 
-SELECT (AVG(?amount) as ?avgAmount) 
+SELECT (ROUND(100 * AVG(?amount)) / 100 as ?avgAmount) 
 WHERE { ?meal e:amount ?amount . }
 

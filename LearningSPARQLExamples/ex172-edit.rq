@@ -1,0 +1,22 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?city ?name ?population ?description
+WHERE {
+  SERVICE <https://query.wikidata.org/sparql> {
+    ?city wdt:P31 wd:Q515 ;
+      wdt:P17 wd:Q39 ;
+      wdt:P1082 ?population ;
+      rdfs:label ?name .
+    FILTER(LANG(?name) = "en")
+    FILTER(?population > 100000)
+  }
+  SERVICE <https://dbpedia.org/sparql> {
+    ?dbCity owl:sameAs ?city ;
+      dbo:description ?description .
+    FILTER(LANG(?description) = "en")
+  }
+}

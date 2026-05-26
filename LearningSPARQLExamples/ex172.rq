@@ -21,5 +21,3 @@ WHERE
     gp:Hocking_Joseph ?gutenProperty ?gutenValue . 
   }
 }
-
-
