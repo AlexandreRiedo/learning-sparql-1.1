@@ -1,0 +1,19 @@
+PREFIX lib: <http://example.org/lib#>
+PREFIX d: <http://example.org/data/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?bookTitle ?publisherName
+WHERE {
+    ?bookIRI rdf:type lib:Novel ;
+        dc:title ?bookTitle ;
+        lib:publisher ?publisherIRI .
+
+    ?publisherIRI lib:name ?publisherName .
+
+    VALUES ?publisherName { "Tor Books" "Gollancz" } # OPTION A
+    # FILTER(?publisherName IN ("Tor Books", "Gollancz")) # OPTION B
+}
+ORDER BY ?publisherName ?bookTitle
