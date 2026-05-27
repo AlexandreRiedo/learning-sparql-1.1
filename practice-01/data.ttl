@@ -1,0 +1,161 @@
+# filename: data.ttl
+# A small science-fiction / fantasy library dataset.
+
+@prefix lib:  <http://example.org/lib#> .
+@prefix d:    <http://example.org/data/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+
+#
+# Schema-ish hints (kept loose on purpose)
+#
+lib:Book      rdfs:label "Book"@en , "Livre"@fr .
+lib:Author    rdfs:label "Author"@en , "Auteur"@fr .
+lib:Publisher rdfs:label "Publisher"@en .
+lib:Novel     rdfs:subClassOf lib:Book ;
+              rdfs:label "Novel"@en .
+
+#
+# Authors
+#
+d:butler   a lib:Author ;
+           lib:name        "Octavia E. Butler" ;
+           lib:nationality "American" ;
+           lib:birthYear   1947 ;
+           lib:deathYear   2006 .
+
+d:leguin   a lib:Author ;
+           lib:name        "Ursula K. Le Guin" ;
+           lib:nationality "American" ;
+           lib:birthYear   1929 ;
+           lib:deathYear   2018 .
+
+d:asimov   a lib:Author ;
+           lib:name        "Isaac Asimov" ;
+           lib:nationality "American" ;
+           lib:birthYear   1920 ;
+           lib:deathYear   1992 .
+
+d:liu      a lib:Author ;
+           lib:name        "Liu Cixin" ;
+           lib:nationality "Chinese" ;
+           lib:birthYear   1963 .
+
+d:atwood   a lib:Author ;
+           lib:name        "Margaret Atwood" ;
+           lib:nationality "Canadian" ;
+           lib:birthYear   1939 .
+
+# An author with no books in this dataset (useful for NOT EXISTS / MINUS).
+d:doe      a lib:Author ;
+           lib:name        "Jane Doe" ;
+           lib:nationality "British" ;
+           lib:birthYear   1980 .
+
+#
+# Publishers
+#
+d:tor      a lib:Publisher ; lib:name "Tor Books" ;     lib:country "USA" .
+d:ace      a lib:Publisher ; lib:name "Ace Books" ;     lib:country "USA" .
+d:harper   a lib:Publisher ; lib:name "Harper Voyager" ; lib:country "UK" .
+d:gollancz a lib:Publisher ; lib:name "Gollancz" ;      lib:country "UK" .
+
+#
+# Books
+#
+d:kindred a lib:Novel ;
+    dc:title       "Kindred" ;
+    lib:author     d:butler ;
+    lib:publisher  d:harper ;
+    lib:year       1979 ;
+    lib:pages      264 ;
+    lib:genre      "science fiction" , "historical" .
+
+d:parable a lib:Novel ;
+    dc:title       "Parable of the Sower" ;
+    lib:author     d:butler ;
+    lib:publisher  d:harper ;
+    lib:year       1993 ;
+    lib:pages      299 ;
+    lib:genre      "science fiction" , "dystopian" .
+
+d:lhod a lib:Novel ;
+    dc:title       "The Left Hand of Darkness" ;
+    lib:author     d:leguin ;
+    lib:publisher  d:ace ;
+    lib:year       1969 ;
+    lib:pages      304 ;
+    lib:genre      "science fiction" .
+
+d:dispossessed a lib:Novel ;
+    dc:title       "The Dispossessed" ;
+    lib:author     d:leguin ;
+    lib:publisher  d:harper ;
+    lib:year       1974 ;
+    lib:pages      387 ;
+    lib:genre      "science fiction" .
+
+d:earthsea a lib:Novel ;
+    dc:title       "A Wizard of Earthsea" ;
+    lib:author     d:leguin ;
+    lib:publisher  d:gollancz ;
+    lib:year       1968 ;
+    lib:pages      205 ;
+    lib:genre      "fantasy" .
+
+d:foundation a lib:Novel ;
+    dc:title       "Foundation" ;
+    lib:author     d:asimov ;
+    lib:publisher  d:gollancz ;
+    lib:year       1951 ;
+    lib:pages      255 ;
+    lib:genre      "science fiction" .
+
+d:irobot a lib:Novel ;
+    dc:title       "I, Robot" ;
+    lib:author     d:asimov ;
+    lib:publisher  d:gollancz ;
+    lib:year       1950 ;
+    lib:pages      253 ;
+    lib:genre      "science fiction" .
+
+d:tbp a lib:Novel ;
+    dc:title       "The Three-Body Problem" ;
+    lib:author     d:liu ;
+    lib:publisher  d:tor ;
+    lib:year       2008 ;
+    lib:pages      302 ;
+    lib:genre      "science fiction" .
+
+d:darkforest a lib:Novel ;
+    dc:title       "The Dark Forest" ;
+    lib:author     d:liu ;
+    lib:publisher  d:tor ;
+    lib:year       2008 ;
+    lib:pages      512 ;
+    lib:genre      "science fiction" .
+
+d:handmaid a lib:Novel ;
+    dc:title       "The Handmaid's Tale" ;
+    lib:author     d:atwood ;
+    lib:publisher  d:harper ;
+    lib:year       1985 ;
+    lib:pages      311 ;
+    lib:genre      "dystopian" , "science fiction" .
+
+d:oryx a lib:Novel ;
+    dc:title       "Oryx and Crake" ;
+    lib:author     d:atwood ;
+    lib:publisher  d:harper ;
+    lib:year       2003 ;
+    lib:pages      376 ;
+    lib:genre      "dystopian" , "science fiction" .
+
+# A "mystery" book with a missing publication year and missing page count
+# (useful for OPTIONAL / NOT EXISTS questions).
+d:unknownbook a lib:Novel ;
+    dc:title       "Notes from an Unfinished Manuscript" ;
+    lib:author     d:atwood ;
+    lib:genre      "literary" .
