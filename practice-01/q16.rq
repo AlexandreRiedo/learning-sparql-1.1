@@ -1,0 +1,18 @@
+PREFIX d: <http://example.org/data/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX lib: <http://example.org/lib#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?authorName ?bookTitle
+WHERE {
+    VALUES ?authorIRI { d:leguin d:liu }
+
+    ?bookIRI a lib:Novel ;
+        lib:author ?authorIRI ;
+        dc:title ?bookTitle .
+
+    ?authorIRI lib:name ?authorName .
+}
+ORDER BY ?authorName
