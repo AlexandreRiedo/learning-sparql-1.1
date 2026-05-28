@@ -55,7 +55,9 @@
 :cortexX2     a :Composant ; rdfs:label "Cortex-X2 CPU core" ;
               :fournisseur :arm        ; :prix 30 .
 :maliG710     a :Composant ; rdfs:label "Mali-G710 GPU core" ;
-              :fournisseur :arm        ; :prix 20 .
+              :fournisseur :arm        ; 
+              :fournisseur :qualcomm   ; # Q10 test
+              :prix 20 .
 
 :modemX70     a :Composant ; rdfs:label "Snapdragon X70 modem" ;
               :fournisseur :qualcomm   ; :prix 35 .

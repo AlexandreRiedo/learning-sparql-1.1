@@ -3,15 +3,9 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-SELECT DISTINCT ?ComposantIRI
+SELECT ?ComposantIRI
 WHERE {
-    # OPTION A
     ?ComposantIRI a :Composant .
-    ?ComposantIRI :fournisseur :arm .
 
-    # OPTION B
-    # VALUES ?FournisseurIRI { :arm }
-    # ?ComposantIRI a :Composant ;
-    #     :fournisseur ?FournisseurIRI .
+    FILTER NOT EXISTS { ?ComposantIRI :fournisseur ?FournisseurIRI }
 }
-ORDER BY ?ComposantIRI

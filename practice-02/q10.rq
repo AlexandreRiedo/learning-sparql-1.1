@@ -1,0 +1,30 @@
+PREFIX : <http://cui.unig.ch/bda/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?ComposantIRI
+WHERE {
+    # OPTION A
+    # ?ComposantIRI :fournisseur :arm .
+
+    # FILTER NOT EXISTS {
+    #     ?ComposantIRI :fournisseur ?OtherFournisseurIRI .
+
+    #     FILTER(?OtherFournisseurIRI != :arm)
+    # }
+
+    # OPTION B
+    # ?ComposantIRI :fournisseur ?FournisseurIRI .
+
+    # OPTION C
+    ?ComposantIRI :fournisseur :arm .
+
+    MINUS {
+        ?ComposantIRI :fournisseur ?OtherFournisseurIRI .
+        FILTER(?OtherFournisseurIRI != :arm)
+    }
+}
+# OPTION B
+# GROUP BY ?ComposantIRI
+# HAVING (COUNT(DISTINCT *) = 1 && (SAMPLE(?FournisseurIRI) = :arm))
