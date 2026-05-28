@@ -144,3 +144,26 @@
 # A minimal product that uses :cortexA710 directly (no sub-assembly).
 :iotDeviceY     a :Produit ; rdfs:label "IoT Device Y" ;
                 :utilise :cortexA710 .
+
+# Adding an indirect chain of :utilise to test the + operator (q12)
+:iotSubsystemA   a :Composant ; rdfs:label "IoT Subsystem A" ;
+                 :utilise :cortexA710 .
+
+:advancedIotHub  a :Produit ; rdfs:label "Advanced IoT Hub" ;
+                 :utilise :iotSubsystemA .
+
+# --- Added for Q13 testing ---
+
+# 1. A product that uses a component where :arm is a supplier, 
+# BUT :arm is NOT the sole supplier. (Should NOT match Q13)
+:testProductMali a :Produit ; rdfs:label "Test Product Mali" ;
+                 :utilise :maliG710 .
+
+# 2. A product that uses a component where :arm IS the sole supplier, 
+# but deeply nested. (Should MATCH Q13 if indirect is handled correctly)
+# :cortexX2 is only supplied by :arm.
+:testSubsystemX  a :Composant ; rdfs:label "Test Subsystem X" ;
+                 :contient :cortexX2 .
+
+:testProductDeepCortex a :Produit ; rdfs:label "Test Product Deep Cortex" ;
+                       :utilise :testSubsystemX .

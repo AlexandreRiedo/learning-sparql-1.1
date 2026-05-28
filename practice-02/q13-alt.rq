@@ -1,0 +1,15 @@
+﻿PREFIX : <http://cui.unig.ch/bda/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?ProduitIRI
+WHERE {
+    ?ProduitIRI a :Produit ;
+                :utilise/:contient* ?IndirectComposantIRI .
+    ?IndirectComposantIRI :fournisseur :arm .
+
+    FILTER NOT EXISTS {
+        ?IndirectComposantIRI :fournisseur ?f .
+        FILTER(?f != :arm)
+    }
+}
+ORDER BY ?ProduitIRI
