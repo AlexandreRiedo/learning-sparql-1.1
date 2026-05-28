@@ -6,5 +6,5 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 SELECT ?ProduitIRI
 WHERE {
     ?ProduitIRI a :Produit ;
-        :utilise+ :cortexA710 .
+        :utilise/:contient* :cortexA710 .
 }
