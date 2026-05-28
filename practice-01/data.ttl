@@ -159,3 +159,12 @@ d:unknownbook a lib:Novel ;
     dc:title       "Notes from an Unfinished Manuscript" ;
     lib:author     d:atwood ;
     lib:genre      "literary" .
+
+# A non-Novel lib:Book (short-story collection) — Q20 should exclude it.
+d:bloodchild a lib:Book ;
+    dc:title       "Bloodchild and Other Stories" ;
+    lib:author     d:butler ;
+    lib:publisher  d:tor ;
+    lib:year       1995 ;
+    lib:pages      152 ;
+    lib:genre      "science fiction" .
