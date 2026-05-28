@@ -1,0 +1,20 @@
+PREFIX d: <http://example.org/data/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX lib: <http://example.org/lib#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?bookTitle ?authorName ?authorBirthYear
+WHERE {
+    ?bookIRI a lib:Novel ;
+        dc:title ?bookTitle ;
+        lib:year ?bookYear ;
+        lib:author ?authorIRI .
+    
+    ?authorIRI lib:name ?authorName ;
+        lib:birthYear ?authorBirthYear .
+    
+    FILTER(?authorBirthYear < 1940)
+}
+ORDER BY ?authorBirthYear ?authorName ?bookTitle
