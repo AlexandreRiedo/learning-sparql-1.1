@@ -1,4 +1,4 @@
-# SPARQL Practice — Chapters 1–3
+# SPARQL Practice 01
 
 Dataset: [data.ttl](data.ttl) — a small library of sci-fi / fantasy novels, authors and publishers.
 

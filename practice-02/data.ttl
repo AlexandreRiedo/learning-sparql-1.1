@@ -1,0 +1,144 @@
+# filename: data.ttl
+# Composants / Fournisseurs / Produits — extended from the 2022 exam schema.
+# Adds: supplier country (:pays), component price (:prix), a deeper :contient graph,
+# multi-supplier components, an orphan component with no supplier.
+
+@prefix :    <http://cui.unig.ch/bda/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#
+# Schema (verbatim from the exam paper, plus the two extra properties).
+#
+:Composant   a rdfs:Class .
+:Fournisseur a rdfs:Class .
+:Produit     a rdfs:Class .
+
+:fournisseur a rdf:Property ;
+    rdfs:domain :Composant ;
+    rdfs:range  :Fournisseur .
+
+:contient    a rdf:Property ;
+    rdfs:domain :Composant ;
+    rdfs:range  :Composant .
+
+:utilise     a rdf:Property ;
+    rdfs:domain :Produit ;
+    rdfs:range  :Composant .
+
+:pays        a rdf:Property ;
+    rdfs:domain :Fournisseur .
+
+:prix        a rdf:Property ;
+    rdfs:domain :Composant .
+
+#
+# Fournisseurs (suppliers).
+#
+:arm      a :Fournisseur ; rdfs:label "ARM Holdings"         ; :pays "UK" .
+:tsmc     a :Fournisseur ; rdfs:label "TSMC"                 ; :pays "Taiwan" .
+:samsung  a :Fournisseur ; rdfs:label "Samsung Electronics"  ; :pays "South Korea" .
+:qualcomm a :Fournisseur ; rdfs:label "Qualcomm"             ; :pays "USA" .
+:skHynix  a :Fournisseur ; rdfs:label "SK Hynix"             ; :pays "South Korea" .
+:micron   a :Fournisseur ; rdfs:label "Micron Technology"    ; :pays "USA" .
+:sony     a :Fournisseur ; rdfs:label "Sony Semiconductor"   ; :pays "Japan" .
+:foxconn  a :Fournisseur ; rdfs:label "Foxconn"              ; :pays "Taiwan" .
+:lg       a :Fournisseur ; rdfs:label "LG Display"           ; :pays "South Korea" .
+:catl     a :Fournisseur ; rdfs:label "CATL"                 ; :pays "China" .
+
+#
+# Leaf composants (no :contient out).
+#
+:cortexA710   a :Composant ; rdfs:label "Cortex-A710 CPU core" ;
+              :fournisseur :arm        ; :prix 25 .
+:cortexX2     a :Composant ; rdfs:label "Cortex-X2 CPU core" ;
+              :fournisseur :arm        ; :prix 30 .
+:maliG710     a :Composant ; rdfs:label "Mali-G710 GPU core" ;
+              :fournisseur :arm        ; :prix 20 .
+
+:modemX70     a :Composant ; rdfs:label "Snapdragon X70 modem" ;
+              :fournisseur :qualcomm   ; :prix 35 .
+
+:ramDie8gb    a :Composant ; rdfs:label "LPDDR5 8GB die" ;
+              :fournisseur :samsung , :skHynix ;
+              :prix 40 .
+:nandDie128gb a :Composant ; rdfs:label "NAND 128GB die" ;
+              :fournisseur :samsung , :skHynix , :micron ;
+              :prix 50 .
+
+:sensorIMX800 a :Composant ; rdfs:label "Sony IMX800 image sensor" ;
+              :fournisseur :sony       ; :prix 80 .
+:cmosSensor   a :Composant ; rdfs:label "Auxiliary CMOS sensor" ;
+              :fournisseur :sony       ; :prix 15 .
+
+:oledPanel    a :Composant ; rdfs:label "OLED display panel" ;
+              :fournisseur :samsung , :lg ;
+              :prix 60 .
+
+:batteryCell  a :Composant ; rdfs:label "Li-ion battery cell" ;
+              :fournisseur :samsung , :catl ;
+              :prix 18 .
+
+# Intentional gap: a composant with NO :fournisseur declared.
+:mysteryChip  a :Composant ; rdfs:label "Mystery chip (provenance unknown)" ;
+              :prix 5 .
+
+# Unused composant — not contained in anything, not used by any product.
+# Useful for testing "components that no product depends on".
+:legacyCap    a :Composant ; rdfs:label "Legacy decoupling capacitor" ;
+              :fournisseur :micron     ; :prix 1 .
+
+#
+# Compound composants (have :contient).
+#
+:snapdragon8gen2 a :Composant ; rdfs:label "Snapdragon 8 Gen 2 SoC" ;
+                 :fournisseur :qualcomm ;
+                 :prix 110 ;
+                 :contient :cortexA710 , :cortexX2 , :maliG710 , :modemX70 .
+
+:exynos2200      a :Composant ; rdfs:label "Exynos 2200 SoC" ;
+                 :fournisseur :samsung ;
+                 :prix 90 ;
+                 :contient :cortexX2 , :maliG710 .
+
+:cameraModuleA   a :Composant ; rdfs:label "Camera module A" ;
+                 :fournisseur :sony ;
+                 :prix 100 ;
+                 :contient :sensorIMX800 , :cmosSensor .
+
+:batteryPack4500 a :Composant ; rdfs:label "4500 mAh battery pack" ;
+                 :fournisseur :samsung ;
+                 :prix 25 ;
+                 :contient :batteryCell .
+
+:memoryModule    a :Composant ; rdfs:label "Combined RAM + storage module" ;
+                 :fournisseur :samsung ;
+                 :prix 95 ;
+                 :contient :ramDie8gb , :nandDie128gb .
+
+:pcbBoardA       a :Composant ; rdfs:label "PCB board variant A (Snapdragon)" ;
+                 :fournisseur :foxconn ;
+                 :prix 250 ;
+                 :contient :snapdragon8gen2 , :memoryModule , :mysteryChip .
+
+:pcbBoardB       a :Composant ; rdfs:label "PCB board variant B (Exynos)" ;
+                 :fournisseur :foxconn ;
+                 :prix 220 ;
+                 :contient :exynos2200 , :memoryModule .
+
+#
+# Produits.
+#
+:galaxyS23      a :Produit ; rdfs:label "Galaxy S23" ;
+                :utilise :pcbBoardA , :oledPanel , :cameraModuleA , :batteryPack4500 .
+
+:galaxyS23Ultra a :Produit ; rdfs:label "Galaxy S23 Ultra" ;
+                :utilise :pcbBoardB , :oledPanel , :cameraModuleA , :batteryPack4500 .
+
+:tabletX        a :Produit ; rdfs:label "Tablet X" ;
+                :utilise :pcbBoardA , :oledPanel .
+
+# A minimal product that uses :cortexA710 directly (no sub-assembly).
+:iotDeviceY     a :Produit ; rdfs:label "IoT Device Y" ;
+                :utilise :cortexA710 .
