@@ -167,3 +167,14 @@
 
 :testProductDeepCortex a :Produit ; rdfs:label "Test Product Deep Cortex" ;
                        :utilise :testSubsystemX .
+
+# --- Added for Q18 testing (relational division over the :arm-supplied set) ---
+# :arm supplies exactly { :cortexA710, :cortexX2, :maliG710 }.
+#
+# Positive case that exercises the division across DISTINCT paths, not a single
+# SoC: :exynos2200 yields { :cortexX2, :maliG710 } and :cortexA710 is reached
+# directly. Should MATCH Q18 — unlike :galaxyS23 / :tabletX, which get all three
+# via the one :snapdragon8gen2, this product proves the query gathers the full
+# arm set across multiple sub-assemblies.
+:testProductArmComplete a :Produit ; rdfs:label "Test Product Arm Complete" ;
+                        :utilise :exynos2200 , :cortexA710 .
