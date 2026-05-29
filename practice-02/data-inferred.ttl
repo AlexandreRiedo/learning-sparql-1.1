@@ -1,0 +1,206 @@
+﻿PREFIX :     <http://cui.unig.ch/bda/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+:testProductDeepCortex
+        rdf:type    :Produit;
+        rdfs:label  "Test Product Deep Cortex";
+        :utilise    :testSubsystemX .
+
+:testSubsystemX  rdf:type  :Composant;
+        rdfs:label  "Test Subsystem X";
+        :contient   :cortexX2 .
+
+:testProductMali  rdf:type  :Produit;
+        rdfs:label  "Test Product Mali";
+        :utilise    :maliG710 .
+
+:advancedIotHub  rdf:type  :Produit;
+        rdfs:label  "Advanced IoT Hub";
+        :utilise    :iotSubsystemA .
+
+:iotSubsystemA  rdf:type  :Produit , :Composant;
+        rdfs:label  "IoT Subsystem A";
+        :utilise    :cortexA710 .
+
+:iotDeviceY  rdf:type  :Produit;
+        rdfs:label  "IoT Device Y";
+        :utilise    :cortexA710 .
+
+:tabletX  rdf:type  :Produit;
+        rdfs:label  "Tablet X";
+        :utilise    :oledPanel , :pcbBoardA .
+
+:galaxyS23Ultra  rdf:type  :Produit;
+        rdfs:label  "Galaxy S23 Ultra";
+        :utilise    :batteryPack4500 , :cameraModuleA , :oledPanel , :pcbBoardB .
+
+:galaxyS23  rdf:type  :Produit;
+        rdfs:label  "Galaxy S23";
+        :utilise    :batteryPack4500 , :cameraModuleA , :oledPanel , :pcbBoardA .
+
+:pcbBoardB  rdf:type  :Composant;
+        rdfs:label    "PCB board variant B (Exynos)";
+        :contient     :memoryModule , :exynos2200;
+        :fournisseur  :foxconn;
+        :prix         220 .
+
+:pcbBoardA  rdf:type  :Composant;
+        rdfs:label    "PCB board variant A (Snapdragon)";
+        :contient     :mysteryChip , :memoryModule , :snapdragon8gen2;
+        :fournisseur  :foxconn;
+        :prix         250 .
+
+:memoryModule  rdf:type  :Composant;
+        rdfs:label    "Combined RAM + storage module";
+        :contient     :nandDie128gb , :ramDie8gb;
+        :fournisseur  :samsung;
+        :prix         95 .
+
+:batteryPack4500  rdf:type  :Composant;
+        rdfs:label    "4500 mAh battery pack";
+        :contient     :batteryCell;
+        :fournisseur  :samsung;
+        :prix         25 .
+
+:cameraModuleA  rdf:type  :Composant;
+        rdfs:label    "Camera module A";
+        :contient     :cmosSensor , :sensorIMX800;
+        :fournisseur  :sony;
+        :prix         100 .
+
+:exynos2200  rdf:type  :Composant;
+        rdfs:label    "Exynos 2200 SoC";
+        :contient     :maliG710 , :cortexX2;
+        :fournisseur  :samsung;
+        :prix         90 .
+
+:snapdragon8gen2  rdf:type  :Composant;
+        rdfs:label    "Snapdragon 8 Gen 2 SoC";
+        :contient     :modemX70 , :maliG710 , :cortexX2 , :cortexA710;
+        :fournisseur  :qualcomm;
+        :prix         110 .
+
+:legacyCap  rdf:type  :Composant;
+        rdfs:label    "Legacy decoupling capacitor";
+        :fournisseur  :micron;
+        :prix         1 .
+
+:mysteryChip  rdf:type  :Composant;
+        rdfs:label  "Mystery chip (provenance unknown)";
+        :prix       5 .
+
+:batteryCell  rdf:type  :Composant;
+        rdfs:label    "Li-ion battery cell";
+        :fournisseur  :catl , :samsung;
+        :prix         18 .
+
+:oledPanel  rdf:type  :Composant;
+        rdfs:label    "OLED display panel";
+        :fournisseur  :lg , :samsung;
+        :prix         60 .
+
+:cmosSensor  rdf:type  :Composant;
+        rdfs:label    "Auxiliary CMOS sensor";
+        :fournisseur  :sony;
+        :prix         15 .
+
+:sensorIMX800  rdf:type  :Composant;
+        rdfs:label    "Sony IMX800 image sensor";
+        :fournisseur  :sony;
+        :prix         80 .
+
+:nandDie128gb  rdf:type  :Composant;
+        rdfs:label    "NAND 128GB die";
+        :fournisseur  :micron , :skHynix , :samsung;
+        :prix         50 .
+
+:ramDie8gb  rdf:type  :Composant;
+        rdfs:label    "LPDDR5 8GB die";
+        :fournisseur  :skHynix , :samsung;
+        :prix         40 .
+
+:modemX70  rdf:type   :Composant;
+        rdfs:label    "Snapdragon X70 modem";
+        :fournisseur  :qualcomm;
+        :prix         35 .
+
+:maliG710  rdf:type   :Composant;
+        rdfs:label    "Mali-G710 GPU core";
+        :fournisseur  :qualcomm , :arm;
+        :prix         20 .
+
+:cortexX2  rdf:type   :Composant;
+        rdfs:label    "Cortex-X2 CPU core";
+        :fournisseur  :arm;
+        :prix         30 .
+
+:cortexA710  rdf:type  :Composant;
+        rdfs:label    "Cortex-A710 CPU core";
+        :fournisseur  :arm;
+        :prix         25 .
+
+:catl   rdf:type    :Fournisseur;
+        rdfs:label  "CATL";
+        :pays       "China" .
+
+:lg     rdf:type    :Fournisseur;
+        rdfs:label  "LG Display";
+        :pays       "South Korea" .
+
+:foxconn  rdf:type  :Fournisseur;
+        rdfs:label  "Foxconn";
+        :pays       "Taiwan" .
+
+:sony   rdf:type    :Fournisseur;
+        rdfs:label  "Sony Semiconductor";
+        :pays       "Japan" .
+
+:micron  rdf:type   :Fournisseur;
+        rdfs:label  "Micron Technology";
+        :pays       "USA" .
+
+:skHynix  rdf:type  :Fournisseur;
+        rdfs:label  "SK Hynix";
+        :pays       "South Korea" .
+
+:qualcomm  rdf:type  :Fournisseur;
+        rdfs:label  "Qualcomm";
+        :pays       "USA" .
+
+:samsung  rdf:type  :Fournisseur;
+        rdfs:label  "Samsung Electronics";
+        :pays       "South Korea" .
+
+:tsmc   rdf:type    :Fournisseur;
+        rdfs:label  "TSMC";
+        :pays       "Taiwan" .
+
+:arm    rdf:type    :Fournisseur;
+        rdfs:label  "ARM Holdings";
+        :pays       "UK" .
+
+:prix   rdf:type     rdf:Property;
+        rdfs:domain  :Composant .
+
+:pays   rdf:type     rdf:Property;
+        rdfs:domain  :Fournisseur .
+
+:utilise  rdf:type   rdf:Property;
+        rdfs:domain  :Produit;
+        rdfs:range   :Composant .
+
+:contient  rdf:type  rdf:Property;
+        rdfs:domain  :Composant;
+        rdfs:range   :Composant .
+
+:fournisseur  rdf:type  rdf:Property;
+        rdfs:domain  :Composant;
+        rdfs:range   :Fournisseur .
+
+:Produit  rdf:type  rdfs:Class .
+
+:Fournisseur  rdf:type  rdfs:Class .
+
+:Composant  rdf:type  rdfs:Class .
