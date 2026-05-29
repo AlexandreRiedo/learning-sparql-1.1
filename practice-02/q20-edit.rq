@@ -1,0 +1,54 @@
+PREFIX : <http://cui.unig.ch/bda/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?fSoleLabel ?fSoleMax
+WHERE {
+    # Getting the max count
+    {
+        SELECT (MAX(?fSoleCount) AS ?fSoleMax)
+        WHERE {
+            {
+                SELECT ?fSole (COUNT(DISTINCT ?c) AS ?fSoleCount)
+                WHERE {
+                    {
+                        SELECT ?c (COUNT(DISTINCT ?f) AS ?fCount)
+                        WHERE {
+                            ?c :fournisseur ?f
+                        }
+                        GROUP BY ?c
+
+                        HAVING (?fCount = 1)
+                    }
+
+                    ?fSole ^ :fournisseur ?c
+                }
+                GROUP BY ?fSole
+            }
+        }
+    }
+
+    # Getting the fLabels
+    {
+        SELECT ?fSole (COUNT(DISTINCT ?c) AS ?fSoleCount)
+        WHERE {
+            {
+                SELECT ?c (COUNT(DISTINCT ?f) AS ?fCount)
+                WHERE {
+                    ?c :fournisseur ?f
+                }
+                GROUP BY ?c
+
+                HAVING (?fCount = 1)
+            }
+
+            ?fSole ^ :fournisseur ?c
+        }
+        GROUP BY ?fSole
+    }
+
+    ?fSole rdfs:label ?fSoleLabel .
+
+    FILTER(?fSoleCount = ?fSoleMax)
+}
