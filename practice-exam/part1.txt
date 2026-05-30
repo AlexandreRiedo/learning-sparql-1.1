@@ -1,0 +1,37 @@
+PREFIX : <http://cui.unig.ch/bda/>
+
+# Q1
+SELECT ?c
+WHERE {
+    ?c :fournisseur :arm .
+}
+
+# Q2
+SELECT ?c
+WHERE {
+    ?c :fournisseur :arm .
+
+    FILTER NOT EXISTS {
+        ?c :fournisseur ?otherFournisseur .
+        FILTER(?otherFournisseur != :arm)
+    }
+}
+
+# Q3
+SELECT DISTINCT ?p
+WHERE {
+    ?p :utilise/:contient* :cortex-A710 .
+}
+
+# Q4 (V2)
+SELECT DISTINCT ?p
+WHERE {
+    ?p :utilise/:contient* ?c .
+
+    ?c :fournisseur :arm .
+    
+    FILTER NOT EXISTS {
+        ?c :fournisseur ?f
+        FILTER(?f != :arm)
+    }
+}
