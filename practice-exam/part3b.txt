@@ -1,0 +1,10 @@
+# PART 2
+:B  rdfs:subClassOf :C .
+
+:A  rdfs:subClassOf :C .
+
+:D  rdfs:subClassOf :C .
+
+# Il semble donc que maintenant, la classe :C est la classe au sommet de la 
+châine de parenté des classes.
+# On a toutefois des propriétés intéressantes: :C rdfs:subClassOf :C . 
