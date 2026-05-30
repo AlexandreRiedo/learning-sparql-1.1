@@ -1,0 +1,43 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://bda-exam.test/>.
+
+:seTrouve a rdf:Property .              # 1
+:mensuration a rdf:Property .           # 2
+:mesureMètre a rdf:Property .           # 3
+:année a rdf:Property .                 # 4
+:estPlanté a rdf:Property .             # 5
+
+:lieuGéographique a rdfs:Class .
+:seTrouve rdfs:domain :arbre ;
+          rdfs:range :lieuGéographique .
+
+:plante a rdfs:Class .
+
+:arbre a rdfs:Class .
+:arbre rdfs:subClassOf :plante .
+
+:hêtre rdfs:subClassOf :arbre .
+:chêne rdfs:subClassOf :arbre .
+:érable rdfs:subClassOf :arbre .
+:cerisier rdfs:subClassOf :arbre .
+
+:A01 a :chêne ;
+    :seTrouve :Carouge ;
+    :mensuration [:mesureMètre 1.30 ; :année 2001] ;
+    :mensuration [:mesureMètre 2.10 ; :année 2010] ;
+    :mensuration [:mesureMètre 2.22 ; :année 2011] ;
+    :mensuration [:mesureMètre 3.40 ; :année 2021] .
+
+:A04 a :érable ;
+    :estPlanté [:année 2000] ;
+    :mensuration [:mesureMètre 2.30 ; :année 2002] ;
+    :mensuration [:mesureMètre 4.15 ; :année 2007] ;
+    :mensuration [:mesureMètre 6.30 ; :année 2010] .
+
+:A55 a :arbre ;
+    :estPlanté [:année 2005] ;
+    :seTrouve :Versoix .
+
+_:unArbre a :arbre ;
+    :mensuration [:mesureMètre 15.30 ; :année 2020] .
