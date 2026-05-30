@@ -1,0 +1,20 @@
+:C  a :B ;
+    a :A ;
+    a :E ;
+    a :D ;
+
+:B  a :A ;
+    a :D ;
+    a: E ;
+
+:A  a :E .
+
+:D  a :E .
+
+
+:v  a :E .
+
+:u  a :B ;
+    a: A ;
+    a: D ;
+    a: E ;

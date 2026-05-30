@@ -1,0 +1,13 @@
+:C  rdfs:subClassOf :A ;
+    rdfs:subClassOf :E ;
+    rdfs:subClassOf :D ;
+
+:B  rdfs:subClassOf :E ;
+
+:v  a :E .
+
+:u :q :v ;
+    a :B ;
+    a: A ;
+    a: D ;
+    a: E .
